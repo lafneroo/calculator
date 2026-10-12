@@ -9,14 +9,33 @@ root = tk.Tk()
 root.geometry('350x450')
 root.title('calculator')
 
-lable = tk.Label(root, width=250, height=10 )
-lable.pack()
+lable = tk.Label(root, width=250, height=5, background="white")
+lable.pack(padx=1, pady=1)
+
+result = ("")
 
 
 def insert_value(value):
-    input = gui()
+    global lable, result
+    result += f"{value}"
+    lable.config(text=result)
+
+    print(result)
 
 
+def maths():
+    global lable, result
+    num1 = ''
+    num2 = ''
+    if result.__contains__("="):
+        if result.__contains__("+"):
+            for i in range(len(result)):
+                if result[i].__contains__("+"):
+                    num1 += result[:i]
+                    num2 += result[i+1:].strip("=")
+                    out = str(int(num1) + int(num2))
+
+    lable.config(text=out)
 
 def init():
     frame_top = tk.Frame(root, width=350, height=100, background='black')
@@ -30,8 +49,6 @@ def gui():
     frame_bottom_left[1].pack(side="left", padx=10, pady=15)
     frame_bottom_right = init()
     frame_bottom_right[2].pack(side="right", padx=10, pady=15)
-    frame_top = init()
-    frame_top[0].pack()
     col = 0
     row = 0
     for step in range(10):
